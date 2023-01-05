@@ -21,7 +21,7 @@ songplay_table_create = ("""
                                         start_time timestamp NOT NULL,
                                         user_id int NOT NULL,
                                         level varchar,
-                                        song_id integer,
+                                        song_id varchar,
                                         artist_id varchar,
                                         session_id varchar,
                                         location varchar,
@@ -85,7 +85,8 @@ songplay_table_insert = ("""
                         location,
                         user_agent
                         ) 
-                        VALUES (DEFAULT,%s,%s,%s,%s,%s,%s,%s,%s);
+                        VALUES (DEFAULT,%s,%s,%s,%s,%s,%s,%s,%s)
+                        ON CONFLICT (songplay_id)  DO NOTHING;
 """)
 
 user_table_insert = ("""
@@ -96,7 +97,8 @@ user_table_insert = ("""
                         gender,
                         level
                         ) 
-                        VALUES (%s,%s,%s,%s,%s);
+                        VALUES (%s,%s,%s,%s,%s)
+                        ON CONFLICT (user_id)  DO NOTHING;
 """)
 
 song_table_insert = ("""
@@ -107,7 +109,8 @@ song_table_insert = ("""
                         year,
                         duration
                         ) 
-                        VALUES (%s,%s,%s,%s,%s);
+                        VALUES (%s,%s,%s,%s,%s)
+                        ON CONFLICT (song_id)  DO NOTHING;
 """)
 
 artist_table_insert = ("""
@@ -118,7 +121,8 @@ artist_table_insert = ("""
                         latitude,
                         longitude
                         ) 
-                        VALUES (%s,%s,%s,%s,%s);
+                        VALUES (%s,%s,%s,%s,%s)
+                        ON CONFLICT (artist_id)  DO NOTHING;
 """)
 
 
@@ -132,7 +136,8 @@ time_table_insert = ("""
                         year,
                         weekday 
                         ) 
-                        VALUES (%s,%s,%s,%s,%s,%s,%s);
+                        VALUES (%s,%s,%s,%s,%s,%s,%s)
+                        ON CONFLICT (start_time)  DO NOTHING;
 """)
 
 # FIND SONGS
