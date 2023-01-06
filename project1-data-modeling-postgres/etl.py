@@ -6,6 +6,17 @@ from sql_queries import *
 
 
 def process_song_file(cur, filepath):
+    """
+    This function is used to read the file in the filepath (data/song_data)
+    to get the song and artist info and used to populate the song and artist dim tables.
+
+    Arguments:
+        cur: the cursor object. 
+        filepath: log data file path. 
+
+    Returns:
+        None
+    """
     # open song file
     df = pd.read_json(filepath , lines=True)
 
@@ -19,6 +30,18 @@ def process_song_file(cur, filepath):
 
 
 def process_log_file(cur, filepath):
+    """
+    This function reads the log file, filters the data by NextSong action,
+    converts the timestamp column to datetime, inserts time data records,
+    loads user table, inserts user records, and inserts songplay records.
+    
+    Arguments:
+        cur: the cursor object. 
+        filepath: log data file path. 
+
+    Returns:
+        None
+    """
     # open log file
     df = pd.read_json(filepath , lines=True)
 
@@ -62,7 +85,22 @@ def process_log_file(cur, filepath):
 
 
 def process_data(cur, conn, filepath, func):
-    # get all files matching extension from directory
+    """
+    This function takes the cursor, connection, filepath and function as input and processes the data.
+    It gets all the files matching the extension from the directory.
+    It gets the total number of files found.
+    It iterates over the files and processes the data.
+    
+    Arguments:
+        cur: the cursor object. 
+        conn: the connection object.
+        filepath: log data file path.
+        func: function to process the data.
+
+    Returns:
+        None
+    """
+
     all_files = []
     for root, dirs, files in os.walk(filepath):
         files = glob.glob(os.path.join(root,'*.json'))
@@ -81,7 +119,7 @@ def process_data(cur, conn, filepath, func):
 
 
 def main():
-    conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=postgres password=postgres")
+    conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
     cur = conn.cursor()
 
     process_data(cur, conn, filepath='data/song_data', func=process_song_file)
