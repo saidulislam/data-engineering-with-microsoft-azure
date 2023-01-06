@@ -89,6 +89,15 @@ songplay_table_insert = ("""
                         ON CONFLICT (songplay_id)  DO NOTHING;
 """)
 
+## ATTENTION !!!!
+## The conflict handling for the user table is a special case. 
+## If you look closely at the data you will realise that the level 
+## field has two possible values free and paid. A user is upgraded 
+## from free to paid and to free user. Hence, on conflict you need to 
+## update the level for the user instead of ignoring the new record. 
+## You can update by using this in your 
+## insert query: ON CONFLICT (user_id) DO UPDATE SET level=EXCLUDED.level
+
 user_table_insert = ("""
     INSERT INTO users (
                         user_id,
@@ -98,7 +107,7 @@ user_table_insert = ("""
                         level
                         ) 
                         VALUES (%s,%s,%s,%s,%s)
-                        ON CONFLICT (user_id)  DO NOTHING;
+                        ON CONFLICT (user_id) DO UPDATE SET level=EXCLUDED.level;
 """)
 
 song_table_insert = ("""
