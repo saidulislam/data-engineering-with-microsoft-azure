@@ -31,7 +31,7 @@ $ python etl.py
 * etl.ipynb 
 <br>Reads and processes a single file from song_data and log_data and loads the data into your tables. This notebook contains detailed instructions on the ETL process for each of the tables.
 
-## State and justify your database schema design and ETL pipeline
+## Database schema design and ETL pipeline (state and justification)
 songplays is the Fact table in our design.
 <br><br>
 All other tables (users, songs, artists, and time) are the Dimension tables in our design. These dimension tables are connected to the fact table through their individual primary (users.user_id, songs.song_id, artists.artist_id, and time.start_time) keys.
