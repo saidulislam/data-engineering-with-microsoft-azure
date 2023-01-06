@@ -33,9 +33,9 @@ $ python etl.py
 
 ## State and justify your database schema design and ETL pipeline
 songplays is the Fact table in our design.
-<br>
+<br><br>
 All other tables (users, songs, artists, and time) are the Dimension tables in our design. These dimension tables are connected to the fact table through their individual primary (users.user_id, songs.song_id, artists.artist_id, and time.start_time) keys.
-<br>
+<br><br>
 ETL work is done in 2 steps. First, we load the data from song files (song_data) to populate songs and artists tables. Second, we load data from log files (log_data) to populate users, time, and songplays tables.
-<br>
+<br><br>
 With the ETL pipeline completed, you should have a much simpler database schema and a working ETL pipeline that we can use to load the data into our database continuously with some type cron jobs or some even driven mechanism. Our SQL joins to create a report or extract the data becomes much simpler due to the star schema design. Reading of the data is much faster and that is a huge benefit of the star schema.
